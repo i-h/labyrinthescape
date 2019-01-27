@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour {
@@ -26,8 +28,17 @@ public class Movement : MonoBehaviour {
         _rb.MovePosition(transform.position += (Vector3)(_moveVector.normalized/50*MoveSpeed));
 	}
 
-    public void Win()
+    public void Win(Text winText)
     {
         Debug.Log(name + " finished!");
+        winText.gameObject.SetActive(true);
+        winText.GetComponent<Text>().text = PlayerBind + " wins!\nTotal time: " + Time.time;
+
+        Invoke("Restart", 3.0f);
+    }
+
+    void Restart()
+    {
+        SceneManager.LoadScene("Main");
     }
 }
